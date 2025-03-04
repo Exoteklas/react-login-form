@@ -4,9 +4,7 @@ import "./App.css";
 function App() {
     const initialValues = {
         username: "",
-        email: "",
         password: "",
-        confirmPassword: "",
     };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
@@ -29,26 +27,18 @@ function App() {
             console.log(formValues);
         }
     }, [formErrors, formValues, isSubmit]);
+
     const validate = (values) => {
         const errors = {};
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
         if (!values.username) {
-            errors.username = "Username is required!";
-        }
-        if (!values.email) {
-            errors.email = "Email is required!";
-        } else if (!regex.test(values.email)) {
-            errors.email = "This is not a valid email format!";
+            errors.username = "¡El nombre de usuario es obligatorio!";
         }
         if (!values.password) {
-            errors.password = "Password is required";
+            errors.password = "La contraseña es obligatoria";
         } else if (values.password.length < 4) {
-            errors.password = "Password must be more than 4 characters";
+            errors.password = "La contraseña debe tener más de 4 caracteres";
         } else if (values.password.length > 10) {
-            errors.password = "Password cannot exceed more than 10 characters";
-        }
-        if (values.password !== values.confirmPassword) {
-            errors.confirmPassword = "Those passwords didn’t match. Try again.";
+            errors.password = "La contraseña no puede tener más de 10 caracteres";
         }
         return errors;
     };
@@ -59,67 +49,45 @@ function App() {
             <div className="container">
                 {Object.keys(formErrors).length === 0 && isSubmit ? (
                     <div className="ui message success">
-                        Signed in successfully
+                        Inicio de sesión exitoso
                     </div>
                 ) : (
-                    console.log("Entered Details", formValues)
+                    console.log("Detalles ingresados", formValues)
                 )}
 
                 <form onSubmit={handleSubmit}>
-                    <h1>Sign Up</h1>
+                    <h1>Iniciar Sesión</h1>
                     <div className="ui divider"></div>
                     <div className="ui form">
                         <div className="field">
-                            <label>Username</label>
+                            <label>Nombre de Usuario</label>
                             <input
                                 type="text"
                                 name="username"
-                                placeholder="Choose a username"
+                                placeholder="Ingrese su nombre de usuario"
                                 value={formValues.username}
                                 onChange={handleChange}
                             />
                         </div>
                         <p>{formErrors.username}</p>
                         <div className="field">
-                            <label>Email</label>
-                            <input
-                                type="text"
-                                name="email"
-                                placeholder="Email"
-                                value={formValues.email}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <p>{formErrors.email}</p>
-                        <div className="field">
-                            <label>Password</label>
+                            <label>Contraseña</label>
                             <input
                                 type="password"
                                 name="password"
-                                placeholder="Password"
+                                placeholder="Ingrese su contraseña"
                                 value={formValues.password}
                                 onChange={handleChange}
                             />
                         </div>
                         <p>{formErrors.password}</p>
-                        <div className="field">
-                            <label>Confirm Password</label>
-                            <input
-                                type="password"
-                                name="confirmPassword"
-                                placeholder="Confirm password"
-                                value={formValues.confirmPassword}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <p>{formErrors.confirmPassword}</p>
-                        <button className="fluid ui button blue">Submit</button>
+                        <button className="fluid ui button blue">Enviar</button>
                     </div>
                 </form>
                 <div className="text">
-                    Already have an account? <span>Login</span>
+                    ¿No tienes una cuenta? <span>Regístrate</span>
                 </div>
-            </div>{" "}
+            </div>
         </>
     );
 }
